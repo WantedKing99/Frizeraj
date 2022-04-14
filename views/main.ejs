@@ -53,8 +53,41 @@
               </div>
 
               <div class="form-group">
+                <label for="dan" class="col-form-label">Dan:</label>
+                <select name="dan" class="form-control" id="dan">                                  
+                  <option value="ponedeljak">Ponedeljak</option>    
+                  <option value="utorak">Utorak</option>
+                  <option value="sreda">Sreda</option>
+                  <option value="cetvrtak">Cetvrtak</option>
+                  <option value="petak">Petak</option>                               
+                </select>
+              </div>
+
+              <div class="modal-body">
+                <select name="zaposleni" class="form-control" id="zaposleni">
+                    <% for(i = 0 ; i < zaposleni.length ; i++) { %> 
+                        <option data-value='{"od":"<%= zaposleni[i].odRadnoVreme %>","do":"<%= zaposleni[i].doRadnoVreme %>"}'>
+                        <%= i+1 %>.
+                        <%= zaposleni[i].imeZaposlenog %> - radi <%= zaposleni[i].odRadnoVreme %> - <%= zaposleni[i].doRadnoVreme %> 
+                        </option>
+                        <% } %>
+                    </select>
+            </div>
+
+              <!-- <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Vreme:</label>
                 <input type="text" name="vreme" class="form-control" id="vreme">
+              </div> -->
+
+              <div class="form-group">
+                <label for="dan" class="col-form-label">Vreme:</label>
+                <select name="vreme" class="form-control" id="vreme">                                  
+                  <% for(i = 0 ; i < radnovreme.length ; i++) { %> 
+                    <option >
+                      <%= radnovreme[i].pocetak %> - <%= radnovreme[i].kraj %> 
+                    </option>
+                    <% } %>            
+                </select>
               </div>
 
               <div class="form-group">
@@ -62,9 +95,13 @@
                 <textarea class="form-control" name="opis" id="opis"></textarea>
               </div>
 
+              
+
               <div style="visibility: hidden;" class="form-group">
                 <input type="text" name="datum" class="form-control" id="datum">
               </div>
+
+             
 
               <button type="submit" class="btn btn-primary" onclick="Snimi()" >Snimi</button>
             </form>
@@ -83,6 +120,7 @@
         var cena;
         var vreme;
         var opis;
+        var imeZaposlenog;
 
         function GetDate(){
             datum = $('.datepicker').val().split("-").reverse().join("-");
@@ -101,14 +139,18 @@
             cena = modal.find('#cena').val()
             vreme = modal.find('#vreme').val()
             opis = modal.find('#opis').val()
-            $("#listaVremena").append("<li>" + vreme + "h, "+ datum + "</li>");
+            imeZaposlenog = modal.find('#zaposleni').find(":selected").val();
 
-            alert( datum + " , " + imeKlijenta + " , " + cena + " , " + vreme + " , " + opis);
-            console.log(datum);
-            console.log(imeKlijenta);
-            console.log(cena);
-            console.log(vreme);
-            console.log(opis);
+            // zaposleniOd = modal.find('#zaposleni').find(":selected").data("value").od;
+            // zaposleniDo = modal.find('#zaposleni').find(":selected").data("value").do;
+
+            console.log(imeZaposlenog);
+            
+            // if(zaposleniOd < vreme || zaposleniDo > vreme){
+            //   alert("Zakazianje je moguce samo u radnom vremenu")
+            //   return;
+            // }
+            // $("#listaVremena").append("<li>" + vreme + "h, "+ datum + "</li>");
 
             $('#close').click();
         }   
